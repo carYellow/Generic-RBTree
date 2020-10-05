@@ -1,4 +1,12 @@
-
+/**
+ * @file RBTree.c
+ * @author  Moshe Tannenbaum <moshe.tannenbaum@mail.huji.ac.il>
+ * @version 1.0
+ * @date 12 Dec 2019
+ *
+ * @brief header of generic Red and black tree,
+ *
+ */
 
 #ifndef RBTREE_RBTREE_H
 #define RBTREE_RBTREE_H

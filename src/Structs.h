@@ -1,11 +1,17 @@
-//
-// Created by evyat on 10/13/2019.
-//
+/**
+ * @file Structs.c
+ * @author  Moshe Tannenbaum <moshe.tannenbaum@mail.huji.ac.il>
+ * @version 1.0
+ * @date 12 Dec 2019
+ *
+ * @brief Implements a vector struct and a string struct to be used in a generic RBTree
+ *
 
+ */
 #include "RBTree.h"
 
-#ifndef TA_EX3_STRUCTS_H
-#define TA_EX3_STRUCTS_H
+#ifndef STRUCTS_H
+#define STRUCTS_H
 
 /**
  * Represents a vector. The double* is dynamically allocated
@@ -71,4 +77,4 @@ int copyIfNormIsLarger(const void *pVector, void *pMaxVector); // implement it i
 Vector *findMaxNormVectorInTree(RBTree *tree); // implement it in Structs.c You must use copyIfNormIsLarger in the implementation!
 
 
-#endif //TA_EX3_STRUCTS_H
+#endif //STRUCTS_H
