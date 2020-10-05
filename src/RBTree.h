@@ -11,21 +11,24 @@
 #ifndef RBTREE_RBTREE_H
 #define RBTREE_RBTREE_H
 
-// a color of a Node.
+/**
+ * The color of node on RBTree
+ */
 typedef enum Color
 {
 	RED, BLACK
 } Color;
 
 /**
- * a function to sort the tree items.
- * @a, @b: two items.
- * @return: equal to 0 iff a == b. lower than 0 if a < b. Greater than 0 iff b < a.
+ * Compares between two given items.
+ * @param a - pointer to first item
+ * @param a - pointer to second item
+ * @return: equal to 0 iff a == b. Lower than 0 if a < b. Greater than 0 iff b < a.
  */
 typedef int (*CompareFunc)(const void *a, const void *b);
 
 /**
- * a function to apply on all tree items.
+ * A function to apply on the tree items.
  * @object: a pointer to an item of the tree.
  * @args: pointer to other arguments for the function.
  * @return: 0 on failure, other on success.
@@ -33,13 +36,13 @@ typedef int (*CompareFunc)(const void *a, const void *b);
 typedef int (*forEachFunc)(const void *object, void *args);
 
 /**
- * a function to free a data item
+ * a function to free a structure item
  * @object: a pointer to an item of the tree.
  */
 typedef void (*FreeFunc)(void *data);
 
 /*
- * a node of the tree.
+ * Node of the tree.
  */
 typedef struct Node
 {
@@ -50,7 +53,7 @@ typedef struct Node
 } Node;
 
 /**
- * represents the tree
+ * Represents the tree
  */
 typedef struct RBTree
 {
@@ -61,27 +64,28 @@ typedef struct RBTree
 } RBTree;
 
 /**
- * constructs a new RBTree with the given CompareFunc.
- * comp: a function two compare two variables.
+ * constructs a new RBTree with the given CompareFunc and freeFunc
+ * @param compFunc - function that compares between to two elements in the tree
+ * @param freeFunc - function that Free an element in the tree
+ * @return
  */
-RBTree *newRBTree(CompareFunc compFunc, FreeFunc freeFunc); // implement it in RBTree.c
+RBTree *newRBTree(CompareFunc compFunc, FreeFunc freeFunc);
 
 /**
- * add an item to the tree
+ * Adds an item to the tree
  * @param tree: the tree to add an item to.
  * @param data: item to add to the tree.
  * @return: 0 on failure, other on success. (if the item is already in the tree - failure).
  */
-int addToRBTree(RBTree *tree, void *data); // implement it in RBTree.c
+int addToRBTree(RBTree *tree, void *data);
 
 /**
  * check whether the tree contains this item.
- * @param tree: the tree to add an item to.
+ * @param tree: the tree to check
  * @param data: item to check.
  * @return: 0 if the item is not in the tree, other if it is.
  */
-int containsRBTree(RBTree *tree, void *data); // implement it in RBTree.c
-
+int containsRBTree(RBTree *tree, void *data);
 
 
 /**
@@ -92,7 +96,7 @@ int containsRBTree(RBTree *tree, void *data); // implement it in RBTree.c
  * @param args: more optional arguments to the function (may be null if the given function support it).
  * @return: 0 on failure, other on success.
  */
-int forEachRBTree(RBTree *tree, forEachFunc func, void *args); // implement it in RBTree.c
+int forEachRBTree(RBTree *tree, forEachFunc func, void *args);
 
 /**
  * free all memory of the data structure.

@@ -54,7 +54,8 @@ int concatenate(const void *word, void *pConcatenated)
 }
 
 /**
- * FreeFunc for strings
+ * Free the given strings memory
+ * @param s - pointer of string to free
  */
 void freeString(void *s)
 {
@@ -64,8 +65,7 @@ void freeString(void *s)
 
 /**
  * CompFunc for Vectors, compares element by element, the vector that has the first larger
- * element is considered larger. If vectors are of different lengths and identify for the length
- * of the shorter vector, the shorter vector is considered smaller.
+ * element is considered larger. If the vectors are of different lengths, the shorter vector is considered smaller.
  * @param a - first vector
  * @param b - second vector
  * @return equal to 0 iff a == b. lower than 0 if a < b. Greater than 0 iff b < a.
@@ -107,7 +107,8 @@ int vectorCompare1By1(const void *a, const void *b)
 }
 
 /**
- * frees allocated memory for vectors
+ * Free the given vectors memory
+ * @param pVector - pointer of vector to free
  */
 void freeVector(void *pVector)
 {
@@ -118,7 +119,7 @@ void freeVector(void *pVector)
     }
 
     free(v1);
-} // implement it in Structs.c
+}
 
 /**
  * copy pVector to pMaxVector if : 1. The norm of pVector is greater then the norm of pMaxVector.

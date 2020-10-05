@@ -12,7 +12,7 @@
 #include <stdio.h>
 
 
-void traveseInOrder(Node *node, forEachFunc func, void *args);
+void traverseInOrder(Node *node, forEachFunc func, void *args);
 
 void freeTreeHelper(Node *node, RBTree *tree);
 
@@ -27,8 +27,10 @@ void rightRotate(Node *node, RBTree *tree);
 Node *getSibling(Node *node);
 
 /**
- * constructs a new RBTree with the given CompareFunc.
- * comp: a function two compare two variables.
+ * Constructs a new RBTree with the given CompareFunc and freeFunc
+ * @param compFunc - function that compares between to two elements in the tree
+ * @param freeFunc - function that Free an element in the tree
+ * @return
  */
 RBTree *newRBTree(CompareFunc compFunc, FreeFunc freeFunc)
 {
@@ -44,7 +46,7 @@ RBTree *newRBTree(CompareFunc compFunc, FreeFunc freeFunc)
  * Reconstructs the given tree to the Red and Black tree convention
  * @param newNode - new node that was added that broke the convention
  * @param tree - rb tree with at most one violation
- * @return
+ * @return 1 on success
  */
 int fixingUpTheTree(Node *newNode, RBTree *tree)
 {
@@ -54,7 +56,7 @@ int fixingUpTheTree(Node *newNode, RBTree *tree)
         caseOneInsert(newNode, tree);
         return 1;
     }
-    // Case 2: if newNode parent is black to need to change
+    // Case 2: if newNode parent is black no need to change
     if ((newNode)->parent->color == BLACK)
     {
         return 1;
@@ -98,7 +100,7 @@ void leftRotate(Node *node, RBTree *tree)
         newNode->parent = node->parent;
 
         if (node->parent->left == node)
-        { // TODO change to macro
+        {
             newNode->parent->left = newNode;
         }
         else
@@ -147,8 +149,9 @@ void rightRotate(Node *node, RBTree *tree)
 
 
 /**
- * Case that te hnew Node is the root of the tree
- * @param node  - new node that was added to the tree
+ * Case 1: the new node is the root of the tree
+ * @param node: the new Node
+ * @param tree: the tree to insert the node to
  */
 void caseOneInsert(Node *node, RBTree *tree)
 {
@@ -160,9 +163,9 @@ void caseOneInsert(Node *node, RBTree *tree)
 }
 
 /**
- * Case four input
- * @param node
- * @param tree
+ * Case 4: The parent is red and the uncle is black
+ * @param node: the new Node
+ * @param tree: tree to insert the node to
  */
 void caseFourInsert(Node *node, RBTree *tree)
 {
@@ -196,8 +199,9 @@ void caseFourInsert(Node *node, RBTree *tree)
 }
 
 /**
- * Case that both the perant and uncle are RED,
- * @param node
+ * Case 3: parent and uncle of newNode are RED
+ * @param node: the new Node
+ * @param tree: tree to insert the node to
  */
 void caseThreeInsert(Node *node, RBTree *tree)
 {
@@ -209,9 +213,9 @@ void caseThreeInsert(Node *node, RBTree *tree)
 }
 
 /**
- * Gets the givens nodes Siblings if it has
+ * Gets the givens nodes siblings if it has any
  * @param node
- * @return
+ * @return The given nodes siblings, if the node doesn't have any then returns NULL
  */
 Node *getSibling(Node *node)
 {
@@ -230,52 +234,13 @@ Node *getSibling(Node *node)
 }
 
 /**
- * add an item to the tree
- * @param tree: the tree to add an item to.
- * @param data: item to add to the tree.
- * @return: 0 on failure, other on success. (if the item is already in the tree - failure).
- */
-int insertNormalBinaryTree(RBTree *tree, Node *newNode)
-{
-    Node *curNode = tree->root;
-    // Empty tree, so set the root to the new Node
-    if (curNode == NULL)
-    {
-        tree->root = newNode;
-        fixingUpTheTree(newNode, tree);
-        return 1;
-    }
-
-    // Traversong through tree till find place to add the node
-    while (curNode != NULL)
-    {
-        int relation = tree->compFunc(newNode->data, curNode->data);
-        if (relation == 0)
-        {
-            return 0; // Item already in tree
-        }
-        if (relation > 1)
-        {
-            curNode = curNode->right;
-        }
-        if (relation < 1)
-        {
-            curNode = curNode->left;
-        }
-    }
-    newNode->parent = curNode;
-    return 1;
-}
-
-/**
- * add an item to the tree
+ * Add an item to the tree
  * @param tree: the tree to add an item to.
  * @param data: item to add to the tree.
  * @return: 0 on failure, other on success. (if the item is already in the tree - failure).
  */
 int addToRBTree(RBTree *tree, void *data)
 {
-
 
     if (data == NULL)
     {
@@ -293,7 +258,7 @@ int addToRBTree(RBTree *tree, void *data)
     newNode->data = data;
     newNode->color = RED;
 
-    //
+
     Node *curNode = tree->root;
     // Empty tree, so set the root to the new Node
     if (curNode == NULL)
@@ -304,7 +269,7 @@ int addToRBTree(RBTree *tree, void *data)
         return 1;
     }
 
-    // Traversong through tree till find place to add the node
+    // Traversing through tree till find place to add the node
     while (curNode != NULL)
     {
         int relation = tree->compFunc(data, curNode->data);
@@ -341,7 +306,7 @@ int addToRBTree(RBTree *tree, void *data)
 }
 
 /**
- *
+ * Checks if tree contains theh given data
  * @param tree -
  * @param data -
  * @return 1 if tree contains data, else 0, -1 if fail
@@ -386,7 +351,7 @@ int forEachRBTree(RBTree *tree, forEachFunc func, void *args)
     {
         return 0;
     }
-    traveseInOrder(tree->root, func, args);
+    traverseInOrder(tree->root, func, args);
     return 1;
 }
 
@@ -396,15 +361,15 @@ int forEachRBTree(RBTree *tree, forEachFunc func, void *args)
  * @param func
  * @param args
  */
-void traveseInOrder(Node *node, forEachFunc func, void *args)
+void traverseInOrder(Node *node, forEachFunc func, void *args)
 {
     if (node == NULL)
     {
         return;
     }
-    traveseInOrder(node->left, func, args);
+    traverseInOrder(node->left, func, args);
     func(node->data, args);
-    traveseInOrder(node->right, func, args);
+    traverseInOrder(node->right, func, args);
 }
 
 /**
@@ -418,7 +383,7 @@ void freeRBTree(RBTree *tree)
 }
 
 /**
- * helps free the free recosvly
+ * helps free the tree recursively
  * @param node
  * @param tree
  */
