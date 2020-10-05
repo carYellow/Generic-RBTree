@@ -98,7 +98,7 @@ int forEachRBTree(RBTree *tree, forEachFunc func, void *args); // implement it i
  * free all memory of the data structure.
  * @param tree: the tree to free.
  */
-void freeRBTree(RBTree *tree); // implement it in RBTree.c
+void freeRBTree(RBTree *tree);
 
 
 #endif //RBTREE_RBTREE_H
