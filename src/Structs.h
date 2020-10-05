@@ -14,7 +14,7 @@
 #define STRUCTS_H
 
 /**
- * Represents a vector. The double* is dynamically allocated
+ * Represents a vector.
  */
 typedef struct Vector
 {

@@ -1,5 +1,5 @@
 /**
- * @file Structs.c
+ * @file Structs.h
  * @author  Moshe Tannenbaum <moshe.tannenbaum@mail.huji.ac.il>
  * @version 1.0
  * @date 12 Dec 2019
